@@ -1,4 +1,4 @@
-ip: 192.168.10.10
+ip: 192.168.10.70
 memory: 2048
 cpus: 2
 provider: virtualbox
@@ -11,10 +11,10 @@ folders:
         to: /home/vagrant/code
 sites:
     -
-        map: homestead.test
+        map: reviews.test
         to: /home/vagrant/code/public
 databases:
-    - homestead
+    - reviews
 features:
     -
         mariadb: false
