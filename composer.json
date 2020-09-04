@@ -12,6 +12,7 @@
         "symfony/yaml": "5.1.*"
     },
     "require-dev": {
+        "laravel/homestead": "^11.1"
     },
     "config": {
         "optimize-autoloader": true,
