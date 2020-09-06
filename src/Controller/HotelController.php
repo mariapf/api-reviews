@@ -75,6 +75,8 @@ class HotelController extends AbstractController
 
         try {
 
+
+
             /** @var DtoResourceInterface $requestDto */
             $requestDto = $this->serializer->deserialize(
                 $request->getContent(),
@@ -82,9 +84,15 @@ class HotelController extends AbstractController
                 'json'
             );
 
+
+
             if(!$this->hotelRepository->findById( $requestDto->getId())){
+
                 throw new ResourceNotFoundException( "Resource not found");
             }
+
+            var_dump($requestDto->getId());
+            return new Response('ok', Response::HTTP_OK);
 
             $errors = $this->validator->validate($requestDto);
 
@@ -103,7 +111,10 @@ class HotelController extends AbstractController
 
 
         } catch (Exception $exception) {
-            return new Response($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            //return new Response($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->getErrorResponse($exception->getMessage());
+        } catch (ResourceNotFoundException $notFoundException){
+            return $this->getErrorResponse($notFoundException->getMessage());
         }
 
     }

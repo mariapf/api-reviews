@@ -43,4 +43,17 @@ trait HasSerializedResponse
         );
     }
 
+    public function getErrorResponse($msg = 'Error')
+    {
+        return new JsonResponse(
+            $this->serializer->serialize(
+               ['Error' => $msg],
+                'json'
+            ),
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            [],
+            true
+        );
+    }
+
 }

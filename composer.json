@@ -28,7 +28,10 @@
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "fzaninotto/faker": "^1.9",
         "laravel/homestead": "^11.1",
-        "symfony/maker-bundle": "^1.21"
+        "symfony/browser-kit": "5.1.*",
+        "symfony/css-selector": "5.1.*",
+        "symfony/maker-bundle": "^1.21",
+        "symfony/phpunit-bridge": "^5.1"
     },
     "config": {
         "optimize-autoloader": true,
@@ -66,7 +69,8 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
-        ]
+        ],
+        "test:all": "bin/phpunit --verbose --colors=always"
     },
     "conflict": {
         "symfony/symfony": "*"
