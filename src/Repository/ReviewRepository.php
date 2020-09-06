@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Review;
+use App\Infrastructure\Repository\ResultCollection;
+use App\Infrastructure\Repository\ResultCollectionInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +21,31 @@ class ReviewRepository extends ServiceEntityRepository
         parent::__construct($registry, Review::class);
     }
 
-    // /**
-    //  * @return Review[] Returns an array of Review objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param $hotelId
+     * @param $dateStart
+     * @param $dateEnd
+     * @param $range
+     * @return ResultCollectionInterface
+     */
+    public function findAverageReviewsByRange($hotelId, $dateStart, $dateEnd, $range) : ResultCollectionInterface
     {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+        $results =  $this->createQueryBuilder('r')
+            ->select("count(r.id) as reviewCount, date_part($range, r.created_date) AS dateGroup,
+        avg(r.score) as averageScore")
+            ->andWhere('r.hotel_id = :hotel_id')
+            ->andWhere('r.created_date BETWEEN :date_start AND :date_end')
+            ->setParameter('hotel_id', $hotelId)
+            ->setParameter('date_start', $dateStart)
+            ->setParameter('date_end', $dateEnd)
+            ->groupBy('dateGroup')
             ->getQuery()
             ->getResult()
-        ;
-    }
-    */
+            ;
 
-    /*
-    public function findOneBySomeField($value): ?Review
-    {
-        return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return new ResultCollection($results);
+
     }
-    */
+
+
 }
