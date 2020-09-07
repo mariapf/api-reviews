@@ -92,14 +92,14 @@ class HotelController extends AbstractController
                 return new Exception($errors, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-                /** @var ResultCollection $statsCollection */
-                $statsCollection = $this->hotelStatsService->averageHotelScore(
-                    $requestDto->getId(),
-                    $requestDto->getDateStart(),
-                    $requestDto->getDateEnd());
+            /** @var ResultCollection $statsCollection */
+            $statsCollection = $this->hotelStatsService->averageHotelScore(
+                $requestDto->getId(),
+                $requestDto->getDateStart(),
+                $requestDto->getDateEnd());
 
-                $this->setNormalizedResponse();
-                return $this->getSerializedResponse($statsCollection);
+            $this->setNormalizedResponse();
+            return $this->getSerializedResponse($statsCollection);
 
 
         } catch (Exception $exception) {
