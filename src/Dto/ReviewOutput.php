@@ -80,16 +80,4 @@ class ReviewOutput implements ConstructFromArrayInterface
         $this->dateGroup = $dateGroup;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray(){
-
-        return [
-            'review-count' => $this->reviewCount,
-            'average-score' => $this->averageScore,
-            'date-group' => $this->dateGroup,
-        ];
-
-    }
 }
